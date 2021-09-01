@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 /*
 A component that can add new numbers to a sum. The component renders the following:
 
@@ -13,7 +13,11 @@ function AddNumber(props) {
 
   return (
     <>
-      <input onChange={(event) => setInput(event.target.value)} type="text" />
+      <input
+        value={input}
+        onChange={(event) => setInput(event.target.value)}
+        type="text"
+      />
 
       <button
         type="button"
