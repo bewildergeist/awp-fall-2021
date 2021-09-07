@@ -1,16 +1,16 @@
-import React from 'react';
 import { Router } from "@reach/router";
 
 import "./App.css";
 
-import FruitList from './FruitList';
-import About from './About';
+import FruitList from "./FruitList";
+import About from "./About";
 import Nav from "./Nav";
 import ShowStuff from "./ShowStuff";
 
 function App(props) {
   return (
-    <div className="background-yellow">
+    <div className="box background-yellow">
+      <h1>App.js</h1>
       <Nav /> {/* <Nav> is always rendered */}
       <Router>
         <FruitList path="/"></FruitList>

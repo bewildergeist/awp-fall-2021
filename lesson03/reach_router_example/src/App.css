@@ -1,3 +1,12 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.box {
+  padding: 20px;
+  border-radius: 6px;
+}
+
 .background-yellow {
   background: rgb(247, 247, 164);
 }
@@ -11,5 +20,5 @@
 }
 
 .background-green {
-  background: rgb(64, 196, 64);
+  background: rgb(118, 232, 135);
 }

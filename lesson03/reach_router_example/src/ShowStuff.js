@@ -1,9 +1,7 @@
-import React from 'react';
-
 function ShowStuff(props) {
-  return(
-    <div className="background-green">
-      <h1>Show some stuff</h1>
+  return (
+    <div className="box background-green">
+      <h1>ShowStuff.js</h1>
       <p>Name of the stuff is: {props.name}</p>
     </div>
   );
