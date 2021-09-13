@@ -6,16 +6,16 @@ function Recipes(props) {
 
   return (
     <>
-      <h3>List</h3>
-      <ol>
-        {
-          data.map( recipe => <li>
+      <h3>All recipes</h3>
+      <ol className="recipes-list">
+        {data.map((recipe) => (
+          <li key={recipe.id}>
             <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
-          </li> )
-        }
+          </li>
+        ))}
       </ol>
 
-      <AddRecipe addRecipe={addRecipe}/>
+      <AddRecipe addRecipe={addRecipe} />
     </>
   );
 }

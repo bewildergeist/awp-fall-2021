@@ -1,68 +1,79 @@
-import { useState, useEffect } from 'react';
-import { Router } from "@reach/router";
+import { useState } from "react";
+import { Router, Link } from "@reach/router";
 
 import Recipes from "./Recipes";
 import Recipe from "./Recipe";
 
-/*
+import "./style.css";
+
 const data = [
-  { id: 1, title: 'Pizza 1', description: "Pizza is nice 1" },
-  { id: 2, title: 'Pizza 2', description: "Pizza is nice 2" },
-  { id: 3, title: 'Pizza 3', description: "Pizza is nice 3" },
+  {
+    id: 1,
+    title: "Prima Pepperoni Deep Dish Pizza",
+    description:
+      "Pepperoni with chunky vine-ripened tomato sauce, mozzarella and pecorino romano.",
+    ingredients: ["Pepperoni", "Mozarella cheese", "Pecorino romano"],
+  },
+  {
+    id: 2,
+    title: "Chicago-style hot dog",
+    description:
+      "Chicago-style hot dog with everything, which includes mustard, relish, celery salt, freshly chopped onions, sliced red ripe tomatoes, kosher pickle and sport peppers piled onto a perfectly steamed poppy seed bun. Chicagoans call this “dragging the dog through the garden.”",
+    ingredients: [
+      "Mustard",
+      "Relish",
+      "Celery salt",
+      "Freshly chopped onions",
+      "Sliced red ripe tomatoes",
+      "Kosher pickle",
+      "Sport peppers",
+      "Vienna beef sausage",
+      "Poppy seed bun",
+    ],
+  },
+  {
+    id: 3,
+    title: "French Silk Pie",
+    description:
+      "Velvety smooth chocolate silk covered with real whipped cream and milk chocolate curls, inside an amazing pastry crust.",
+    ingredients: [
+      "flour",
+      "butter",
+      "cream",
+      "chocolate pudding",
+      "chocolate curls",
+    ],
+  },
 ];
-*/
 
 function App() {
-  //const [recipes, setRecipes] = useState(data);
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState(data);
 
-  useEffect(() => { 
-    const fetchData = async () => {
-      const url = "http://localhost:8080/api/cooking";
-      const response = await fetch(url);
-      const data = await response.json();
-      setRecipes(data);
-    }; 
-    fetchData();
-  }, []); 
-  
   function getRecipe(id) {
-    return recipes.find(recipe => recipe.id === parseInt(id));
+    return recipes.find((recipe) => recipe.id === parseInt(id));
   }
 
   function addRecipe(title, desc, ingredients) {
-    console.log(title, desc, ingredients);
-
-    const data = { 
-      title: title, 
+    const newRecipe = {
+      id: recipes.length + 1,
+      title: title,
       description: desc,
-      ingredients: ingredients    
+      ingredients: ingredients,
     };
-    const postData = async () => {
-      const url = "http://localhost:8081/api/cooking";
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      const reply = await response.json();
-      console.log(reply);
-
-    }; 
-    postData();
+    setRecipes((currentRecipes) => [...currentRecipes, newRecipe]);
   }
 
   return (
-    <>
-      <h1>Cooking Recipes</h1>
+    <div>
+      <h1 className="site-title">
+        <Link to="/">🧑‍🍳 Cooking Recipes</Link>
+      </h1>
 
       <Router>
-        <Recipes path="/" data={recipes} addRecipe={addRecipe} ></Recipes>
-        <Recipe path="/recipe/:id" getRecipe={getRecipe} ></Recipe>
+        <Recipes path="/" data={recipes} addRecipe={addRecipe}></Recipes>
+        <Recipe path="/recipe/:id" getRecipe={getRecipe}></Recipe>
       </Router>
-    </>
+    </div>
   );
 }
 
