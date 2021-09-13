@@ -12,7 +12,7 @@ describe("Test of Functions", () => {
     const result = functions.replaceBadWords("This is some crap");
     expect(result).toBe("This is some cake");
   });
-    
+
   it("should create a <ul></ul> html list", () => {
     const result = functions.createHtmlUl(["Apple", "Banana", "Orange"]);
     expect(result).toMatch(/^<ul>/); // Matches beginning
@@ -30,11 +30,15 @@ describe("Test of Functions", () => {
   });
 
   it("should create array of tasks, all not done", () => {
-    const result = functions.createTasksFromStringArray(["Do stuff", "Return books", "Cook dinner"]);
+    const result = functions.createTasksFromStringArray([
+      "Do stuff",
+      "Return books",
+      "Cook dinner",
+    ]);
     expect(result).toEqual([
       { task: "Do stuff", done: false },
       { task: "Return books", done: false },
-      { task: "Cook dinner", done: false }
+      { task: "Cook dinner", done: false },
     ]);
   });
 
@@ -42,18 +46,20 @@ describe("Test of Functions", () => {
     const tasks = [
       { task: "Do laundry", done: false },
       { task: "Clean bedroom", done: true },
-      { task: "Bake cake", done: true }
+      { task: "Bake cake", done: true },
     ];
     const result = functions.transformTasksToHtml(tasks);
 
-    expect(result.replace(/(\r\n|\n|\r)/gm, "")).toEqual("<ul><li>Do laundry</li><li>Clean bedroom</li><li>Bake cake</li></ul>");
+    expect(result.replace(/(\r\n|\n|\r)/gm, "")).toEqual(
+      "<ul><li>Do laundry</li><li>Clean bedroom</li><li>Bake cake</li></ul>"
+    );
   });
 
   it("should count done tasks", () => {
     const tasks = [
       { task: "Do laundry", done: false },
       { task: "Clean bedroom", done: true },
-      { task: "Bake cake", done: true }
+      { task: "Bake cake", done: true },
     ];
     const result = functions.countDoneTasks(tasks);
     expect(result).toBe(2);
@@ -63,7 +69,7 @@ describe("Test of Functions", () => {
     const tasks = [
       { task: "Do laundry", done: false },
       { task: "Clean bedroom", done: true },
-      { task: "Bake cake", done: true }
+      { task: "Bake cake", done: true },
     ];
     const result = functions.getUndoneTasks(tasks);
     expect(result[0]).toEqual({ task: "Do laundry", done: false });
@@ -75,17 +81,17 @@ describe("Test of Functions", () => {
   });
 
   it("should count average length of words", () => {
-    const result = functions.averageLengthOfWorlds("welcome to jurrasic park");
+    const result = functions.averageLengthOfWords("welcome to jurrasic park");
     expect(result).toBeCloseTo(5.25);
   });
 
-  it("should summerize tasks", () => {
+  it("should summarize tasks", () => {
     const tasks = [
       { task: "Do laundry", done: false },
       { task: "Clean bedroom", done: true },
-      { task: "Bake cake", done: true }
+      { task: "Bake cake", done: true },
     ];
-    const result = functions.summerizeTasks(tasks);
+    const result = functions.summarizeTasks(tasks);
     expect(result).toEqual({ done: 2, notDone: 1 });
   });
 });
