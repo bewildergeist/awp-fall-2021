@@ -13,6 +13,7 @@ body {
   margin: 0;
   padding: 40px;
   background-color: var(--color-beige);
+  line-height: 1.4;
 }
 
 body,
@@ -61,7 +62,6 @@ a:hover {
 
 .recipe {
   max-width: 38em;
-  line-height: 1.4;
 }
 
 .ingredients {

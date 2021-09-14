@@ -12,7 +12,13 @@ const data = [
     title: "Prima Pepperoni Deep Dish Pizza",
     description:
       "Pepperoni with chunky vine-ripened tomato sauce, mozzarella and pecorino romano.",
-    ingredients: ["Pepperoni", "Mozarella cheese", "Pecorino romano"],
+    ingredients: [
+      "Pepperoni",
+      "Mozarella cheese",
+      "Pecorino romano",
+      "Flour",
+      "Butter",
+    ],
     cookingTime: 35,
   },
   {
@@ -39,11 +45,11 @@ const data = [
     description:
       "Velvety smooth chocolate silk covered with real whipped cream and milk chocolate curls, inside an amazing pastry crust.",
     ingredients: [
-      "flour",
-      "butter",
-      "cream",
-      "chocolate pudding",
-      "chocolate curls",
+      "Flour",
+      "Butter",
+      "Cream",
+      "Chocolate pudding",
+      "Chocolate curls",
     ],
     cookingTime: 45,
   },
@@ -73,8 +79,13 @@ function App() {
       </h1>
 
       <Router>
-        <Recipes path="/" data={recipes} addRecipe={addRecipe}></Recipes>
-        <Recipe path="/recipe/:id" getRecipe={getRecipe}></Recipe>
+        <Recipes path="/" recipes={recipes} addRecipe={addRecipe} />
+        <Recipes
+          path="/recipes/with/:ingredient"
+          recipes={recipes}
+          addRecipe={addRecipe}
+        />
+        <Recipe path="/recipe/:id" getRecipe={getRecipe} />
       </Router>
     </div>
   );

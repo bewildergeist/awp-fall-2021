@@ -1,3 +1,5 @@
+import { Link } from "@reach/router";
+
 function Recipe(props) {
   const { id, getRecipe } = props;
   const recipe = getRecipe(id);
@@ -27,7 +29,11 @@ function Recipe(props) {
 
           <ul>
             {recipe.ingredients.map((ingredient, index) => {
-              return <li key={index}>{ingredient}</li>;
+              return (
+                <li key={index}>
+                  <Link to={`/recipes/with/${ingredient}`}>{ingredient}</Link>
+                </li>
+              );
             })}
           </ul>
         </div>
