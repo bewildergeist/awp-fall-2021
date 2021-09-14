@@ -12,6 +12,14 @@ function Recipes(props) {
     );
   }
 
+  const totalPreparationTime = recipesToShow.reduce(
+    (accumulator, currentValue) => {
+      accumulator += currentValue.cookingTime;
+      return accumulator;
+    },
+    0
+  );
+
   return (
     <div>
       {isFilteredByIngredient ? (
@@ -27,6 +35,8 @@ function Recipes(props) {
           </li>
         ))}
       </ol>
+
+      <p>{totalPreparationTime} minutes of preparation time in total.</p>
 
       {/* Do not show the AddRecipe component if we're on a filtered view */}
       {isFilteredByIngredient ? null : (
