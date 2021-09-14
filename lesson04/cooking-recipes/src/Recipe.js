@@ -10,7 +10,12 @@ function Recipe(props) {
       <div className="recipe">
         <h3>{recipe.title}</h3>
 
-        {/* Conditionally render description of set */}
+        <p>
+          Difficulty: {recipe.cookingTime > 25 ? "Hard" : "Easy"}. Preparation
+          time: {recipe.cookingTime} minutes.
+        </p>
+
+        {/* Conditionally render description if set */}
         {recipe.description ? (
           <p>{recipe.description}</p>
         ) : (

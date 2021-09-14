@@ -13,6 +13,7 @@ const data = [
     description:
       "Pepperoni with chunky vine-ripened tomato sauce, mozzarella and pecorino romano.",
     ingredients: ["Pepperoni", "Mozarella cheese", "Pecorino romano"],
+    cookingTime: 35,
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ const data = [
       "Vienna beef sausage",
       "Poppy seed bun",
     ],
+    cookingTime: 15,
   },
   {
     id: 3,
@@ -43,6 +45,7 @@ const data = [
       "chocolate pudding",
       "chocolate curls",
     ],
+    cookingTime: 45,
   },
 ];
 
