@@ -1,31 +1,26 @@
-import React, {useState, useEffect} from 'react';
-import ExampleButton from './ExampleButton';
-import ExampleEffect from './ExampleEffect';
+import { useState, useEffect } from "react";
+import ExampleButton from "./ExampleButton";
+import ExampleEffect from "./ExampleEffect";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [joke, setJoke] = useState();
 
-  useEffect(() => { 
-    const fetchData = async () => {
-      // Just some example data from a public and open API
-      const url = "https://api.chucknorris.io/jokes/random";
-      const response = await fetch(url);
-      const data = await response.json();
-      setData(data);
-    }; 
-    fetchData();
+  useEffect(() => {
+    fetch("https://api.chucknorris.io/jokes/random")
+      .then((response) => response.json())
+      .then((data) => setJoke(data.value));
   }, []); // Only use this effect after first render
 
   return (
     <div className="App">
       <h2>React Hooks</h2>
 
-      <ExampleButton></ExampleButton>
+      <ExampleButton />
 
-      <ExampleEffect></ExampleEffect>
+      <ExampleEffect />
 
-      <h3>Data from API:</h3>
-      <p>{data.value}</p>
+      <h3>Tasteless joke from API:</h3>
+      <quote>{joke}</quote>
     </div>
   );
 }
