@@ -24,7 +24,7 @@ function AppWithApi() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, []); // Important! Empty dependency array to only call this useEffect when the component mounts
 
   function getRecipe(id) {
     return recipes.find((recipe) => recipe.id === parseInt(id));
