@@ -1,13 +1,15 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8081;
 
+/* The express.json() middleware automatically parses JSON data in the body of
+ * requests: http://expressjs.com/en/api.html#express.json */
 app.use(express.json());
 
-// Why would you need this?
-// https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+/* The cors() middleware allows Cross-Origin Resource Sharing when developing
+ * locally: http://expressjs.com/en/resources/middleware/cors.html */
 app.use(cors());
 
 app.get("/api/", (req, res) => {

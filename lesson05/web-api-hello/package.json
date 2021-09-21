@@ -2,6 +2,7 @@
   "name": "web-api-hello",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "hello-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
