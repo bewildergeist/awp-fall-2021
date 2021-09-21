@@ -1,11 +1,10 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require('cors');
+const cors = require("cors");
 
 const app = express();
 const port = 8081;
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Why would you need this?
 // https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
@@ -22,7 +21,7 @@ app.get("/api/data/:name", (request, response) => {
 });
 
 app.post("/api/data", (request, response) => {
-  // fruit is being sent as JSON in the body
+  // `fruit` is being sent as JSON in the body
   const { fruit } = request.body;
   response.json({ msg: `You sent me ${fruit}` });
 });
