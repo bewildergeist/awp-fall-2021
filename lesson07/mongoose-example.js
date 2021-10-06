@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 
 // Use the "recipes" database
-mongoose.connect("mongodb://localhost/recipes", { 
-  useNewUrlParser: true, useUnifiedTopology: true  });
+mongoose.connect("mongodb://localhost/recipes", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 async function doStuff() {
-  
   const recipeSchema = new mongoose.Schema({
     title: String,
     description: String,
-    ingredients: [String]
+    ingredients: [String],
   });
 
   const RecipeModel = mongoose.model("Recipe", recipeSchema);
@@ -18,7 +19,7 @@ async function doStuff() {
   let pizza = new RecipeModel({
     title: "Pizza",
     description: "This is pizza",
-    ingredients: ["tomato", "cheese", "onion"]
+    ingredients: ["tomato", "cheese", "onion"],
   });
   console.log("pizza", pizza);
   try {
@@ -29,14 +30,14 @@ async function doStuff() {
   }
 
   // Part 2: Searching for a document
-  pizza = await RecipeModel.findOne({title: "Pizza"});
+  pizza = await RecipeModel.findOne({ title: "Pizza" });
   console.log("findOne pizza", pizza);
 
   // Part 3: Update a pizza?
   // 1. Find document
   // 2. Make changes to the document
   // 3. Save it again
-  const pizzaToUpdate = await RecipeModel.findOne({title: "Pizza"});
+  const pizzaToUpdate = await RecipeModel.findOne({ title: "Pizza" });
   pizzaToUpdate.title = "Some other pizza";
   pizzaToUpdate.description = "Another type of pizza";
   await pizzaToUpdate.save();
@@ -47,10 +48,9 @@ async function doStuff() {
   console.log("pizzaArray", pizzaArray);
 
   // Part 5: Delete some pizzas
-  await RecipeModel.deleteMany({title: "Pizza"});
+  await RecipeModel.deleteMany({ title: "Pizza" });
 }
 
 doStuff().then(() => {
   mongoose.disconnect();
-})
-
+});
