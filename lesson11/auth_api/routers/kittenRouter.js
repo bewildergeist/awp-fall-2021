@@ -1,6 +1,6 @@
 import express from "express";
 
-export default function createKittenRouter(data) {
+export function createKittenRouter(data) {
   const router = express.Router();
 
   router.get("/", (req, res) => {

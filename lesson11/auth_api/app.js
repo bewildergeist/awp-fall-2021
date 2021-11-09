@@ -11,8 +11,8 @@ import morgan from "morgan";
 import cors from "cors";
 import checkJwt from "express-jwt"; // Validates access tokens automatically
 
-import createUsersRouter from "./routers/usersRouter.js";
-import createKittenRouter from "./routers/kittenRouter.js";
+import { createUsersRouter } from "./routers/usersRouter.js";
+import { createKittenRouter } from "./routers/kittenRouter.js";
 
 // Configuration
 const port = process.env.PORT || 8080;

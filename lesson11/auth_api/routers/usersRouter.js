@@ -29,7 +29,7 @@ users.forEach(async (user) => {
 });
 
 // Create the routes and export the router
-export default function createUsersRouter(secret) {
+export function createUsersRouter(secret) {
   const router = express.Router();
 
   router.post("/", (req, res) => {
