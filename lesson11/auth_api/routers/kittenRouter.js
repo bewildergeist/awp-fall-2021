@@ -24,7 +24,8 @@ module.exports = data => {
   });
 
   router.post("/:id/hobbies", (req, res) => {
-    const kitten = data.find(k => k.id === Number(id));
+    const id = req.params.id;
+    const kitten = data.find((k) => k.id === Number(id));
     kitten.hobbies.push(req.body.hobby);
     res.json(kitten);
   });
