@@ -1,5 +1,6 @@
-module.exports = data => {
-  const express = require("express");
+import express from "express";
+
+export default function createKittenRouter(data) {
   const router = express.Router();
 
   router.get("/", (req, res) => {
@@ -8,16 +9,16 @@ module.exports = data => {
 
   router.get("/:id", (req, res) => {
     const id = req.params.id;
-    res.json(data.find(k => k.id === Number(id)));
+    res.json(data.find((k) => k.id === Number(id)));
   });
 
   router.post("/", (req, res) => {
     const reducer = (acc, curr) => Math.max(acc, curr);
-    const nextId = data.map(el => el.id).reduce(reducer) + 1;
+    const nextId = data.map((el) => el.id).reduce(reducer) + 1;
     const kitten = {
       id: nextId,
       name: req.body.name,
-      hobbies: [] // Empty hobby array
+      hobbies: [], // Empty hobby array
     };
     data.push(kitten);
     res.json(kitten);
@@ -31,4 +32,4 @@ module.exports = data => {
   });
 
   return router;
-};
+}

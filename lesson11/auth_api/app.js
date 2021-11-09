@@ -6,10 +6,13 @@
  */
 
 // Libraries
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
-const checkJwt = require("express-jwt"); // Validates access tokens automatically
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+import checkJwt from "express-jwt"; // Validates access tokens automatically
+
+import createUsersRouter from "./routers/usersRouter.js";
+import createKittenRouter from "./routers/kittenRouter.js";
 
 // Configuration
 const port = process.env.PORT || 8080;
@@ -28,18 +31,21 @@ const openPaths = [
   /^(?!\/api).*/gim,
 
   // Open all GET requests on the form "/api/questions/*" using a regular expression
-  { url: /\/api\/questions\.*/gim, methods: ["GET"] }
+  { url: /\/api\/questions\.*/gim, methods: ["GET"] },
 ];
 
 // The secret value. Defaults to "the cake is a lie".
 const secret = process.env.SECRET || "the cake is a lie";
 
 // Validate the user token using checkJwt middleware.
-app.use(checkJwt({ secret, algorithms: ["HS512"] }).unless({ path: openPaths }));
+app.use(
+  checkJwt({ secret, algorithms: ["HS512"] }).unless({ path: openPaths })
+);
 
 // This middleware checks the result of checkJwt above
 app.use((err, req, res, next) => {
-  if (err.name === "UnauthorizedError") { // If the user didn't authorize correctly
+  if (err.name === "UnauthorizedError") {
+    // If the user didn't authorize correctly
     res.status(401).json({ error: err.message }); // Return 401 with error message.
   } else {
     next(); // If no errors, forward request to next middleware or route handler
@@ -54,10 +60,12 @@ const data = [
 ];
 
 // The routes
-const usersRouter = require("./routers/usersRouter")(secret);
-const kittenRouter = require("./routers/kittenRouter")(data);
+const usersRouter = createUsersRouter(secret);
+const kittenRouter = createKittenRouter(data);
 app.use("/api/users", usersRouter);
 app.use("/api/kittens", kittenRouter);
 
 // Start
-app.listen(port, () => console.log(`Auth Kittens API running on port ${port}!`));
+app.listen(port, () =>
+  console.log(`Auth Kittens API running on port ${port}!`)
+);

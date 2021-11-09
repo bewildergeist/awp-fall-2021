@@ -1,24 +1,25 @@
-const express = require('express');
-const router = express.Router();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');  // Used for hashing passwords!
+import express from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 // I recommend that you store your users in MongoDB using Mongoose instead of this.
 const users = [
   // These are just some test users with passwords.
   // The passwords are in clear text for testing purposes (don't do this in production).
-  { id: 0, username: "krdo", password: '123' },
-  { id: 1, username: "tosk", password: 'password' },
-  { id: 2, username: "mvkh", password: 'l33th0xor' },
+  { id: 0, username: "john", password: "123" },
+  { id: 1, username: "paul", password: "password" },
+  { id: 2, username: "george", password: "qwerty" },
+  { id: 3, username: "ringo", password: "l33th0xor" },
 ];
 
-// We run through all users and hash their password. 
+// We run through all users and hash their password.
 // Ideally, this should happen only in POST /api/users/ when signing up a new user,
 // or in PUT /api/users/ when changing the password.
-users.forEach(async user => {
+users.forEach(async (user) => {
   const hashedPassword = await new Promise((resolve, reject) => {
     bcrypt.hash(user.password, 10, function (err, hash) {
-      if (err) reject(err); else resolve(hash);
+      if (err) reject(err);
+      else resolve(hash);
     });
   });
 
@@ -28,21 +29,22 @@ users.forEach(async user => {
 });
 
 // Create the routes and export the router
-module.exports = secret => {
+export default function createUsersRouter(secret) {
+  const router = express.Router();
 
-  router.post('/', (req, res) => {
+  router.post("/", (req, res) => {
     // TODO: Implement user account creation
     res.status(501).json({ msg: "create new user not implemented" });
   });
 
-  router.patch('/', (req, res) => {
+  router.patch("/", (req, res) => {
     // TODO: Implement user update (change password, etc).
     res.status(501).json({ msg: "update user not implemented" });
   });
 
   // This route takes a username and a password and creates an auth token
   // POST /api/users/authenticate
-  router.post('/authenticate', (req, res) => {
+  router.post("/authenticate", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -54,17 +56,21 @@ module.exports = secret => {
     }
 
     const user = users.find((user) => user.username === username);
-    if (user) { // If the user is found
+    if (user) {
+      // If the user is found
       if (bcrypt.compareSync(password, user.hash)) {
         const payload = { username: username };
-        const token = jwt.sign(payload, secret, { algorithm: 'HS512', expiresIn: '1h' });
+        const token = jwt.sign(payload, secret, {
+          algorithm: "HS512",
+          expiresIn: "1h",
+        });
 
         res.json({
           msg: `User '${username}' authenticated successfully`,
-          token: token
+          token: token,
         });
       } else {
-        res.status(401).json({ msg: "Password mismatch!" })
+        res.status(401).json({ msg: "Password mismatch!" });
       }
     } else {
       res.status(404).json({ msg: "User not found!" });
@@ -72,4 +78,4 @@ module.exports = secret => {
   });
 
   return router;
-};
+}
