@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import AuthService from "./AuthService";
+import apiService from "./apiService";
 
 import Login from "./Login";
-
-const API_URL = "http://localhost:8080/api";
-
-const authService = new AuthService(`${API_URL}/users/authenticate`);
 
 function App() {
   const [kittens, setKittens] = useState([]);
@@ -14,9 +10,8 @@ function App() {
   // Getting data from API
   useEffect(() => {
     async function getData() {
-      const url = `${API_URL}/kittens`;
-      // We now use `authService.fetch()` instead of `fetch()`
-      const response = await authService.fetch(url);
+      // We now use `apiService.fetch()` instead of `fetch()`
+      const response = await apiService.fetch("/kittens");
       const data = await response.json();
       setKittens(data);
     }
@@ -26,7 +21,7 @@ function App() {
   // Login using API
   async function login(username, password) {
     try {
-      const resp = await authService.login(username, password);
+      const resp = await apiService.login(username, password);
       console.log("Authentication:", resp.msg);
       setPostCount((p) => p + 1);
     } catch (e) {
@@ -36,7 +31,7 @@ function App() {
 
   /*
   useEffect(() => {
-    if (!authService.loggedIn()) {
+    if (!apiService.loggedIn()) {
       login("krdo", "123").then(() => {
         setPostCount(p => p + 1); // Refresh data after login
       })
@@ -56,7 +51,7 @@ function App() {
   }
 
   let loginPart = <Login login={login}></Login>;
-  if (authService.loggedIn()) {
+  if (apiService.loggedIn()) {
     loginPart = "Logged in!";
   }
 

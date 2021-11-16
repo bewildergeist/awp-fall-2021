@@ -1,14 +1,18 @@
+// TODO: Pull this variable from process.env.REACT_APP_API (via an .env file)
+const API_URL = "http://localhost:8080/api";
+
 /**
- * Service class for authenticating users against an API
- * and storing JSON Web Tokens in the browser's LocalStorage.
+ * Service class for interacting with an API, authenticating users against the
+ * API, and storing JSON Web Tokens in the browser's localStorage.
  */
-class AuthService {
-  constructor(auth_api_url) {
-    this.auth_api_url = auth_api_url;
+
+class ApiService {
+  constructor(api_url) {
+    this.api_url = api_url;
   }
 
   async login(username, password) {
-    const res = await this.fetch(this.auth_api_url, {
+    const res = await this.fetch("/users/authenticate", {
       method: "POST",
       body: JSON.stringify({
         username,
@@ -16,7 +20,7 @@ class AuthService {
       }),
     });
     let json = await res.json();
-    if ([401, 404].includes(parseInt(res.status))) {
+    if (!res.ok) {
       throw Error(json.msg);
     }
     this.setToken(json.token);
@@ -56,11 +60,14 @@ class AuthService {
       headers["Authorization"] = `Bearer ${this.getToken()}`;
     }
 
-    return fetch(url, {
+    return fetch(this.api_url + url, {
       headers,
       ...options,
     });
   }
 }
 
-export default AuthService;
+// Export a single instance of the class
+const apiService = new ApiService(API_URL);
+
+export default apiService;
