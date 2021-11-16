@@ -32,16 +32,6 @@ function App() {
     }
   }
 
-  /*
-  useEffect(() => {
-    if (!apiService.loggedIn()) {
-      login("krdo", "123").then(() => {
-        setPostCount(p => p + 1); // Refresh data after login
-      })
-    }
-  }, []); // Only try login at first page render
-  */
-
   let contents = <p>No kittens!</p>;
   if (kittens.length > 0) {
     contents = (
