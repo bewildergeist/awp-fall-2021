@@ -10,10 +10,13 @@ function App() {
   // Getting data from API
   useEffect(() => {
     async function getData() {
-      // We now use `apiService.fetch()` instead of `fetch()`
-      const response = await apiService.fetch("/kittens");
-      const data = await response.json();
-      setKittens(data);
+      // We now use `apiService.get()` instead of `fetch()`
+      try {
+        const data = await apiService.get("/kittens");
+        setKittens(data);
+      } catch (error) {
+        console.error(error);
+      }
     }
     getData();
   }, [postCount]); // Refresh data whenever postCount is increased
@@ -21,11 +24,10 @@ function App() {
   // Login using API
   async function login(username, password) {
     try {
-      const resp = await apiService.login(username, password);
-      console.log("Authentication:", resp.msg);
+      await apiService.login(username, password);
       setPostCount((p) => p + 1);
-    } catch (e) {
-      console.log("Login", e);
+    } catch (error) {
+      console.error("Login", error);
     }
   }
 

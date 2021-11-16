@@ -12,19 +12,11 @@ class ApiService {
   }
 
   async login(username, password) {
-    const res = await this.fetch("/users/authenticate", {
-      method: "POST",
-      body: JSON.stringify({
-        username,
-        password,
-      }),
+    const response = await this.post("/users/authenticate", {
+      username,
+      password,
     });
-    let json = await res.json();
-    if (!res.ok) {
-      throw Error(json.msg);
-    }
-    this.setToken(json.token);
-    return json;
+    this.setToken(response.token);
   }
 
   loggedIn() {
@@ -50,19 +42,44 @@ class ApiService {
     localStorage.removeItem("token");
   }
 
-  fetch(url, options) {
+  async makeRequest(path, options) {
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
     };
 
+    // Automatically append the token if the user is logged in
     if (this.loggedIn()) {
       headers["Authorization"] = `Bearer ${this.getToken()}`;
     }
+    try {
+      const response = await fetch(this.api_url + path, {
+        headers: headers,
+        ...options,
+      });
 
-    return fetch(this.api_url + url, {
-      headers,
-      ...options,
+      const parsedResponse = await response.json();
+      if (response.ok) {
+        return parsedResponse;
+      } else {
+        // The response contains an object with an error message; throw it as an error
+        throw parsedResponse;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Helper method for easy GET requests
+  get(path) {
+    return this.makeRequest(path, { method: "GET" });
+  }
+
+  // Helper method for easy POST requests; just pass body as an object
+  post(path, body) {
+    return this.makeRequest(path, {
+      method: "POST",
+      body: body ? JSON.stringify(body) : null,
     });
   }
 }
