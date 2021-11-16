@@ -28,7 +28,7 @@ function App() {
     try {
       const resp = await authService.login(username, password);
       console.log("Authentication:", resp.msg);
-      setPostCount(p => p + 1);
+      setPostCount((p) => p + 1);
     } catch (e) {
       console.log("Login", e);
     }
@@ -46,7 +46,13 @@ function App() {
 
   let contents = <p>No kittens!</p>;
   if (kittens.length > 0) {
-    contents =< ol>{kittens.map(kitten => <li key={kitten.id}>{kitten.name}</li>)}</ol>;
+    contents = (
+      <ol>
+        {kittens.map((kitten) => (
+          <li key={kitten.id}>{kitten.name}</li>
+        ))}
+      </ol>
+    );
   }
 
   let loginPart = <Login login={login}></Login>;

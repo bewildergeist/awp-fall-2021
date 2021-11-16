@@ -9,11 +9,11 @@ class AuthService {
 
   async login(username, password) {
     const res = await this.fetch(this.auth_api_url, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         username,
-        password
-      })
+        password,
+      }),
     });
     let json = await res.json();
     if ([401, 404].includes(parseInt(res.status))) {
@@ -31,7 +31,7 @@ class AuthService {
         // Do something to renew token
     }
      */
-    return (this.getToken() !== null);
+    return this.getToken() !== null;
   }
 
   setToken(token) {
@@ -48,17 +48,17 @@ class AuthService {
 
   fetch(url, options) {
     const headers = {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
+      Accept: "application/json",
+      "Content-Type": "application/json",
     };
 
     if (this.loggedIn()) {
-      headers["Authorization"] = `Bearer ${this.getToken()}`
+      headers["Authorization"] = `Bearer ${this.getToken()}`;
     }
 
     return fetch(url, {
       headers,
-      ...options
+      ...options,
     });
   }
 }
