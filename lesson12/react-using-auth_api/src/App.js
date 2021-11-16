@@ -5,27 +5,28 @@ import Login from "./Login";
 
 function App() {
   const [kittens, setKittens] = useState([]);
-  const [postCount, setPostCount] = useState(0);
+
+  async function getData() {
+    // We now use `apiService.get()` instead of `fetch()`
+    try {
+      const data = await apiService.get("/kittens");
+      setKittens(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   // Getting data from API
   useEffect(() => {
-    async function getData() {
-      // We now use `apiService.get()` instead of `fetch()`
-      try {
-        const data = await apiService.get("/kittens");
-        setKittens(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
     getData();
-  }, [postCount]); // Refresh data whenever postCount is increased
+  }, []);
 
   // Login using API
   async function login(username, password) {
     try {
       await apiService.login(username, password);
-      setPostCount((p) => p + 1);
+      // Fetch data again after logging in
+      getData();
     } catch (error) {
       console.error("Login", error);
     }

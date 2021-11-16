@@ -7,7 +7,6 @@ function Login(props) {
   const [password, setPassword] = useState("");
 
   function onSubmit() {
-    console.log(username, password);
     login(username, password);
   }
 
